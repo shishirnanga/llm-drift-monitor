@@ -1,0 +1,126 @@
+{
+  "run_id": "20251124_122733",
+  "timestamp": "2025-11-24T12:27:33.205512",
+  "models_tested": [
+    "GPT-4 Turbo",
+    "Claude Sonnet 4"
+  ],
+  "total_tests": 3,
+  "total_results": 6,
+  "results": [
+    {
+      "test_id": "math_001",
+      "model_name": "GPT-4 Turbo",
+      "model_id": "gpt-4-turbo-preview",
+      "timestamp": "2025-11-24T12:27:34.575397",
+      "prompt": "What is 247 + 389? Reply with just the number.",
+      "response": "636",
+      "expected": "636",
+      "score": 1.0,
+      "latency_ms": 1369,
+      "tokens_input": 21,
+      "tokens_output": 1,
+      "tokens_total": 22,
+      "success": true,
+      "error": null,
+      "category": "math"
+    },
+    {
+      "test_id": "math_002",
+      "model_name": "GPT-4 Turbo",
+      "model_id": "gpt-4-turbo-preview",
+      "timestamp": "2025-11-24T12:27:35.854794",
+      "prompt": "What is 15% of 240? Reply with just the number.",
+      "response": "36",
+      "expected": "36",
+      "score": 1.0,
+      "latency_ms": 1279,
+      "tokens_input": 22,
+      "tokens_output": 1,
+      "tokens_total": 23,
+      "success": true,
+      "error": null,
+      "category": "math"
+    },
+    {
+      "test_id": "math_003",
+      "model_name": "GPT-4 Turbo",
+      "model_id": "gpt-4-turbo-preview",
+      "timestamp": "2025-11-24T12:27:37.072022",
+      "prompt": "If a train travels 120 miles in 2 hours, what is its average speed in miles per hour? Reply with just the number.",
+      "response": "60",
+      "expected": "60",
+      "score": 1.0,
+      "latency_ms": 1216,
+      "tokens_input": 35,
+      "tokens_output": 1,
+      "tokens_total": 36,
+      "success": true,
+      "error": null,
+      "category": "math"
+    },
+    {
+      "test_id": "math_001",
+      "model_name": "Claude Sonnet 4",
+      "model_id": "claude-sonnet-4-20250514",
+      "timestamp": "2025-11-24T12:27:39.438486",
+      "prompt": "What is 247 + 389? Reply with just the number.",
+      "response": "636",
+      "expected": "636",
+      "score": 1.0,
+      "latency_ms": 2366,
+      "tokens_input": 22,
+      "tokens_output": 5,
+      "tokens_total": 27,
+      "success": true,
+      "error": null,
+      "category": "math"
+    },
+    {
+      "test_id": "math_002",
+      "model_name": "Claude Sonnet 4",
+      "model_id": "claude-sonnet-4-20250514",
+      "timestamp": "2025-11-24T12:27:41.839808",
+      "prompt": "What is 15% of 240? Reply with just the number.",
+      "response": "36",
+      "expected": "36",
+      "score": 1.0,
+      "latency_ms": 2401,
+      "tokens_input": 22,
+      "tokens_output": 5,
+      "tokens_total": 27,
+      "success": true,
+      "error": null,
+      "category": "math"
+    },
+    {
+      "test_id": "math_003",
+      "model_name": "Claude Sonnet 4",
+      "model_id": "claude-sonnet-4-20250514",
+      "timestamp": "2025-11-24T12:27:44.046856",
+      "prompt": "If a train travels 120 miles in 2 hours, what is its average speed in miles per hour? Reply with just the number.",
+      "response": "60",
+      "expected": "60",
+      "score": 1.0,
+      "latency_ms": 2206,
+      "tokens_input": 37,
+      "tokens_output": 5,
+      "tokens_total": 42,
+      "success": true,
+      "error": null,
+      "category": "math"
+    }
+  ],
+  "metadata": {
+    "models": [
+      {
+        "name": "GPT-4 Turbo",
+        "id": "gpt-4-turbo-preview"
+      },
+      {
+        "name": "Claude Sonnet 4",
+        "id": "claude-sonnet-4-20250514"
+      }
+    ]
+  }
+}

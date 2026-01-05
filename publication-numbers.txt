@@ -1,0 +1,22 @@
+======================================================================
+YOUR PUBLICATION NUMBERS
+======================================================================
+
+Dataset: 23 runs analyzed
+
+🏆 OVERALL PERFORMANCE:
+GPT-4o              :  95.3% |   1061ms
+Gemini 1.5 Flash    :  94.1% |   1482ms
+Claude Sonnet 4     :  93.8% |   3321ms
+GPT-4 Turbo         :  93.5% |   1605ms
+GPT-3.5 Turbo       :  86.2% |    723ms
+Gemini 1.5 Pro      :  77.2% |   5409ms
+
+📂 CATEGORY WINNERS:
+code           : Claude Sonnet 4      (100.0%)
+consistency    : GPT-4 Turbo          (100.0%)
+creative       : Claude Sonnet 4      (80.0%)
+factual        : GPT-4 Turbo          (100.0%)
+instruction    : Gemini 1.5 Flash     (99.5%)
+math           : GPT-4 Turbo          (100.0%)
+reasoning      : GPT-4o               (99.0%)
