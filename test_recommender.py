@@ -19,10 +19,10 @@ def test_recommender():
     storage = ResultsStorage()
     runs = storage.load_all_runs()
     
-    print(f"\n✅ Loaded {len(runs)} test runs")
+    print(f"\n Loaded {len(runs)} test runs")
     
     if len(runs) < 3:
-        print("⚠️  Warning: You need at least 3 runs for meaningful recommendations")
+        print("  Warning: You need at least 3 runs for meaningful recommendations")
         print(f"   You currently have {len(runs)} runs")
         print("   Run 'python main.py' a few more times to collect data")
         return

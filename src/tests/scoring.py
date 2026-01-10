@@ -154,7 +154,6 @@ def score_numeric(response: str, expected: str, tolerance: float = 0.01) -> floa
     except ValueError:
         return 0.0
     
-    # Extract all numbers from response
     # This regex matches integers and decimals, including negative
     numbers = re.findall(r'-?\d+\.?\d*', response)
     
@@ -170,7 +169,6 @@ def score_numeric(response: str, expected: str, tolerance: float = 0.01) -> floa
                 return 1.0
             
             # Check within tolerance
-            # For expected=0, use absolute tolerance
             if expected_num == 0:
                 if abs(num) < tolerance:
                     return 1.0
@@ -342,7 +340,6 @@ def score_format(response: str, test: TestCase) -> float:
     
     # instr_008: Numbers 10-6 descending, comma-separated
     if test_id == "instr_008":
-        # Extract numbers
         numbers = re.findall(r'\d+', resp)
         try:
             nums = [int(n) for n in numbers]
@@ -466,14 +463,14 @@ def explain_score(test: TestCase, response: str, score: float) -> str:
         Human-readable explanation string
     """
     if score == 1.0:
-        return "✅ Correct"
+        return " Correct"
     elif score == 0.0:
         if test.expected:
-            return f"❌ Expected '{test.expected}' but got '{response[:50]}...'"
+            return f" Expected '{test.expected}' but got '{response[:50]}...'"
         else:
-            return f"❌ Response did not meet format requirements"
+            return f" Response did not meet format requirements"
     else:
-        return f"⚠️ Partial credit ({score:.1%})"
+        return f" Partial credit ({score:.1%})"
 
 
 # Test the scoring functions
@@ -484,12 +481,12 @@ if __name__ == "__main__":
     assert score_exact("The answer is Paris", "Paris") == 1.0
     assert score_exact("London", "Paris") == 0.0
     assert score_exact("PARIS", "Paris") == 1.0
-    print("✅ Exact scoring works")
+    print(" Exact scoring works")
     
     # Test numeric scoring
     assert score_numeric("The answer is 636", "636") == 1.0
     assert score_numeric("Approximately 36.0", "36") == 1.0
     assert score_numeric("I think 100", "36") == 0.0
-    print("✅ Numeric scoring works")
+    print(" Numeric scoring works")
     
     print("\nAll scoring tests passed!")

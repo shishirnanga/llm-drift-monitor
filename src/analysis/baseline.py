@@ -1,12 +1,3 @@
-"""
-src/analysis/baseline.py
-
-Calculate baseline performance from initial data.
-
-The baseline is your reference point - the first 7-14 days of data.
-Everything else is compared against this baseline.
-"""
-
 from dataclasses import dataclass, field
 from typing import List, Dict
 from datetime import datetime
@@ -93,7 +84,6 @@ def calculate_baseline(
         baseline = calculate_baseline(storage, "GPT-4 Turbo", num_runs=7)
         print(f"Baseline score: {baseline.overall_stats.mean:.1%}")
     """
-    # Load runs
     if start_date and end_date:
         runs = storage.load_runs_since(start_date)
         runs = [r for r in runs if r.timestamp[:10] <= end_date]
@@ -109,7 +99,6 @@ def calculate_baseline(
     if not runs:
         raise ValueError("No runs found for baseline calculation")
     
-    # Filter results for this model
     all_results = []
     for run in runs:
         model_results = [r for r in run.results if r.model_name == model_name]
@@ -118,11 +107,9 @@ def calculate_baseline(
     if not all_results:
         raise ValueError(f"No results found for model: {model_name}")
     
-    # Calculate overall statistics
     all_scores = [r.score for r in all_results]
     overall_stats = calculate_statistics(all_scores)
     
-    # Calculate by category
     by_category = {}
     categories = set(r.category for r in all_results if r.category)
     for category in categories:
@@ -131,7 +118,6 @@ def calculate_baseline(
         if cat_scores:
             by_category[category] = calculate_statistics(cat_scores)
     
-    # Calculate by test
     by_test = {}
     test_ids = set(r.test_id for r in all_results)
     for test_id in test_ids:
@@ -140,7 +126,6 @@ def calculate_baseline(
         if test_scores:
             by_test[test_id] = calculate_statistics(test_scores)
     
-    # Calculate latency statistics
     latencies = [r.latency_ms for r in all_results if r.success]
     latency_stats = calculate_statistics(latencies) if latencies else None
     
@@ -175,12 +160,10 @@ def get_all_baselines(
     if not runs:
         raise ValueError("No runs found")
     
-    # Get all model names
     model_names = set()
     for run in runs:
         model_names.update(run.models_tested)
     
-    # Calculate baseline for each model
     baselines = {}
     for model_name in model_names:
         try:

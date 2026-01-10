@@ -22,7 +22,7 @@ from src.recommender import ModelRecommender, TaskType
 # Page config
 st.set_page_config(
     page_title="AI Model Advisor",
-    page_icon="🤖",
+    page_icon="",
     layout="wide"
 )
 
@@ -61,7 +61,7 @@ st.markdown("""
 
 def main():
     # Header
-    st.markdown('<div class="big-title">🤖 AI Model Advisor</div>', unsafe_allow_html=True)
+    st.markdown('<div class="big-title"> AI Model Advisor</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="subtitle">Find the perfect AI model for your task, backed by real performance data</div>',
         unsafe_allow_html=True
@@ -83,12 +83,12 @@ def main():
         st.subheader("What do you need to do?")
         
         task_descriptions = {
-            TaskType.MATH: "📊 Math & Calculations",
+            TaskType.MATH: " Math & Calculations",
             TaskType.LOGICAL_REASONING: "🧩 Logic Puzzles & Reasoning",
-            TaskType.CREATIVE_WRITING: "✍️ Creative Writing & Stories",
+            TaskType.CREATIVE_WRITING: "✍ Creative Writing & Stories",
             TaskType.CODE_GENERATION: "💻 Code Generation & Debugging",
             TaskType.FACTUAL_QA: "📚 Factual Questions & Knowledge",
-            TaskType.INSTRUCTION_FOLLOWING: "📋 Following Specific Instructions",
+            TaskType.INSTRUCTION_FOLLOWING: " Following Specific Instructions",
             TaskType.COMPLEX_PROBLEM: "🔬 Complex Problem Solving",
             TaskType.GENERAL: "🌐 General Purpose Tasks",
         }
@@ -222,7 +222,7 @@ def main():
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # Detailed stats table
-                with st.expander("📊 View Detailed Statistics"):
+                with st.expander(" View Detailed Statistics"):
                     import pandas as pd
                     
                     data = []
@@ -244,7 +244,7 @@ def main():
     
     # Footer info
     st.markdown("---")
-    st.markdown("### 📊 About This Tool")
+    st.markdown("###  About This Tool")
     
     col1, col2, col3 = st.columns(3)
     
@@ -271,7 +271,7 @@ def main():
     """)
     
     # Model strengths section
-    with st.expander("🏆 View Model Strengths"):
+    with st.expander(" View Model Strengths"):
         st.markdown("### What Each Model Excels At")
         
         for model in recommender.performance_matrix.keys():

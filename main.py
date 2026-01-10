@@ -121,7 +121,7 @@ def main():
             
             if not args.quiet:
                 avg = sum(r.score for r in run.results) / len(run.results) if run.results else 0
-                print(f"✅ {model.name}: {avg:.1%} avg score")
+                print(f" {model.name}: {avg:.1%} avg score")
         
         if not args.quiet:
             print("\n💡 Run without --quick for full test suite on all models")
@@ -134,7 +134,7 @@ def main():
         models = get_models_from_arg(args.model)
         
         if not models:
-            print("❌ No models available. Check your API keys in .env")
+            print(" No models available. Check your API keys in .env")
             return 1
         
         # Get tests
@@ -161,7 +161,7 @@ def main():
         # Final summary
         if not args.quiet:
             print(f"\n{'='*60}")
-            print("✅ TEST RUN COMPLETE")
+            print(" TEST RUN COMPLETE")
             print(f"{'='*60}")
             print(f"Run ID: {run.run_id}")
             print(f"Total results: {len(run.results)}")
@@ -181,10 +181,10 @@ def main():
         return 0
         
     except KeyboardInterrupt:
-        print("\n\n⚠️ Interrupted by user")
+        print("\n\n Interrupted by user")
         return 130
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
         if not args.quiet:
             import traceback
             traceback.print_exc()

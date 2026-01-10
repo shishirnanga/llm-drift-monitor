@@ -1,12 +1,3 @@
-"""
-src/analysis/drift_detection.py
-
-Detect when model performance has drifted significantly.
-
-This is the core of the drift monitor - comparing current performance
-to baseline and flagging when changes are statistically significant.
-"""
-
 from dataclasses import dataclass
 from typing import List, Dict, Optional
 from enum import Enum
@@ -62,7 +53,7 @@ class DriftResult:
     summary: str = ""
     
     def __repr__(self) -> str:
-        status = "🚨 DRIFT" if self.drift_detected else "✅ STABLE"
+        status = " DRIFT" if self.drift_detected else " STABLE"
         return (
             f"{status} {self.model_name}: "
             f"{self.baseline_mean:.1%} → {self.current_mean:.1%} "
@@ -111,9 +102,9 @@ def detect_drift(
         result = detect_drift(storage, "GPT-4 Turbo")
         
         if result.drift_detected:
-            print(f"⚠️ Drift detected! {result.summary}")
+            print(f" Drift detected! {result.summary}")
         else:
-            print("✅ No significant drift")
+            print(" No significant drift")
     """
     all_runs = storage.load_all_runs()
     
@@ -124,10 +115,8 @@ def detect_drift(
             f"Only have {len(all_runs)}."
         )
     
-    # Calculate baseline from first N runs
     baseline = calculate_baseline(storage, model_name, num_runs=baseline_runs)
     
-    # Get current results from last M runs
     current_runs_data = all_runs[-current_runs:]
     current_results = []
     for run in current_runs_data:
@@ -137,7 +126,6 @@ def detect_drift(
     if not current_results:
         raise ValueError(f"No current results found for {model_name}")
     
-    # Extract scores
     baseline_scores = []
     baseline_run_count = 0
     for run in all_runs:
@@ -154,17 +142,13 @@ def detect_drift(
     if len(baseline_scores) < 2 or len(current_scores) < 2:
         raise ValueError(f"Need at least 2 samples in each group. Baseline: {len(baseline_scores)}, Current: {len(current_scores)}")
         
-    # Calculate current statistics
     current_stats = calculate_statistics(current_scores)
     
-    # Run statistical tests
     t_stat, p_value = welch_ttest(baseline_scores, current_scores)
     effect_size = cohens_d(baseline_scores, current_scores)
     
-    # Determine if drift detected
     is_significant = p_value < significance_level
     
-    # Determine severity
     abs_effect = abs(effect_size)
     if not is_significant:
         severity = DriftSeverity.NONE
@@ -177,7 +161,6 @@ def detect_drift(
     
     drift_detected = severity != DriftSeverity.NONE
     
-    # Calculate change percentage
     change_percent = (
         (current_stats.mean - baseline.overall_stats.mean) / 
         baseline.overall_stats.mean * 100
@@ -247,7 +230,6 @@ def compare_periods(
             "2024-12-01", "2024-12-07"   # Week 2
         )
     """
-    # Load runs for each period
     all_runs = storage.load_all_runs()
     
     period1_runs = [
@@ -262,7 +244,6 @@ def compare_periods(
     if not period1_runs or not period2_runs:
         raise ValueError("No runs found in one or both periods")
     
-    # Extract scores
     period1_scores = []
     for run in period1_runs:
         results = [r for r in run.results if r.model_name == model_name]
@@ -276,7 +257,6 @@ def compare_periods(
     if not period1_scores or not period2_scores:
         raise ValueError(f"No results found for {model_name}")
     
-    # Calculate statistics
     period1_stats = calculate_statistics(period1_scores)
     period2_stats = calculate_statistics(period2_scores)
     
@@ -284,7 +264,6 @@ def compare_periods(
     t_stat, p_value = welch_ttest(period1_scores, period2_scores)
     effect_size = cohens_d(period1_scores, period2_scores)
     
-    # Determine drift
     is_significant = p_value < 0.05
     abs_effect = abs(effect_size)
     
@@ -345,10 +324,10 @@ def print_drift_report(result: DriftResult):
     
     # Status
     if result.drift_detected:
-        icon = "🚨"
+        icon = ""
         status = f"DRIFT DETECTED ({result.severity.value.upper()})"
     else:
-        icon = "✅"
+        icon = ""
         status = "NO DRIFT DETECTED"
     
     print(f"{icon} {status}")
@@ -374,13 +353,13 @@ def print_drift_report(result: DriftResult):
     
     # Recommendation
     if result.severity == DriftSeverity.MAJOR:
-        print("⚠️  RECOMMENDATION: Investigate immediately. Major performance change.")
+        print("  RECOMMENDATION: Investigate immediately. Major performance change.")
     elif result.severity == DriftSeverity.MODERATE:
-        print("⚠️  RECOMMENDATION: Monitor closely. Notable performance change.")
+        print("  RECOMMENDATION: Monitor closely. Notable performance change.")
     elif result.severity == DriftSeverity.MINOR:
-        print("ℹ️  RECOMMENDATION: Keep monitoring. Minor but significant change.")
+        print("  RECOMMENDATION: Keep monitoring. Minor but significant change.")
     else:
-        print("✅ RECOMMENDATION: Continue normal monitoring.")
+        print(" RECOMMENDATION: Continue normal monitoring.")
 
 
 # Command-line tool
@@ -392,14 +371,13 @@ if __name__ == "__main__":
     runs = storage.load_all_runs()
     
     if len(runs) < 10:
-        print(f"⚠️  Only {len(runs)} runs available.")
+        print(f"  Only {len(runs)} runs available.")
         print("   Need at least 10 runs (7 baseline + 3 current) for drift detection.")
         print("   Keep running daily tests and check back later!")
         sys.exit(0)
     
     print("Running drift detection analysis...")
     
-    # Get all models
     model_names = set()
     for run in runs:
         model_names.update(run.models_tested)

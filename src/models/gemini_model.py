@@ -47,7 +47,6 @@ class GeminiModel(BaseModel):
             
             latency_ms = int((time.time() - start_time) * 1000)
             
-            # Extract text
             if hasattr(response, 'text'):
                 text = response.text
             else:
@@ -94,11 +93,11 @@ if __name__ == "__main__":
         print("Testing Gemini Pro...")
         model = GeminiModel()
         response = model.query("What is 2+2?")
-        print(f"✅ {response.model_name}: {response.response[:50]}")
+        print(f" {response.model_name}: {response.response[:50]}")
         
         print("\nTesting Gemini Flash...")
         flash = GeminiFlashModel()
         response = flash.query("What is 3+3?")
-        print(f"✅ {response.model_name}: {response.response[:50]}")
+        print(f" {response.model_name}: {response.response[:50]}")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")

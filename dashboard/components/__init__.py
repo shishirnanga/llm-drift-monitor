@@ -1,9 +1,3 @@
-"""
-dashboard/components/__init__.py
-
-Dashboard component exports.
-"""
-
 from .charts import (
     plot_performance_over_time,
     plot_model_comparison,

@@ -1,9 +1,3 @@
-"""
-src/analysis/__init__.py
-
-Statistical analysis module for detecting drift in LLM performance.
-"""
-
 from .baseline import (
     calculate_baseline,
     BaselineMetrics,

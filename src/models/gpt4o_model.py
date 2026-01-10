@@ -135,11 +135,11 @@ if __name__ == "__main__":
         print("Testing GPT-4o...")
         model = GPT4oModel()
         response = model.query("What is 2+2?")
-        print(f"✅ {response.model_name}: {response.response[:50]}")
+        print(f" {response.model_name}: {response.response[:50]}")
         
         print("\nTesting GPT-3.5 Turbo...")
         model35 = GPT35TurboModel()
         response = model35.query("What is 3+3?")
-        print(f"✅ {response.model_name}: {response.response[:50]}")
+        print(f" {response.model_name}: {response.response[:50]}")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")

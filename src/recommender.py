@@ -77,7 +77,6 @@ class ModelRecommender:
                 model_category_results[model][category]['scores'].append(result.score)
                 model_category_results[model][category]['latencies'].append(result.latency_ms)
         
-        # Calculate metrics
         performance_matrix = {}
         
         for model, categories in model_category_results.items():
@@ -87,7 +86,6 @@ class ModelRecommender:
                 scores = data['scores']
                 latencies = data['latencies']
                 
-                # Calculate metrics
                 avg_accuracy = sum(scores) / len(scores) if scores else 0
                 avg_latency = sum(latencies) / len(latencies) if latencies else 0
                 
@@ -133,7 +131,6 @@ class ModelRecommender:
         
         category = task_type.value
         
-        # Calculate weighted scores for each model
         model_scores = {}
         
         for model, categories in self.performance_matrix.items():
@@ -154,7 +151,6 @@ class ModelRecommender:
             # Speed score (inverted latency)
             speed_score = 1 - (metrics['latency'] / max_latency) if max_latency > 0 else 1
             
-            # Calculate weighted score
             weighted_score = (
                 metrics['accuracy'] * priorities.get("accuracy", 0.7) +
                 speed_score * priorities.get("speed", 0.2) +
@@ -177,14 +173,12 @@ class ModelRecommender:
         best_model_name = best_model[0]
         best_score = best_model[1]['total_score']
         
-        # Get alternatives (sorted by score)
         alternatives = sorted(
             [(m, s['total_score']) for m, s in model_scores.items() if m != best_model_name],
             key=lambda x: x[1],
             reverse=True
         )
         
-        # Calculate confidence (how much better is the best model?)
         if alternatives:
             second_best_score = alternatives[0][1]
             confidence = min(1.0, (best_score - second_best_score) / best_score) if best_score > 0 else 0
@@ -218,7 +212,6 @@ class ModelRecommender:
     ) -> str:
         """Generate human-readable reasoning for the recommendation."""
         
-        # Determine primary strength
         strengths = []
         if metrics['accuracy'] > 0.9:
             strengths.append(f"highest accuracy ({metrics['accuracy']:.1%})")
@@ -257,13 +250,13 @@ class ModelRecommender:
     def print_recommendations(self):
         """Print all recommendations in a formatted way."""
         print("\n" + "=" * 60)
-        print("🤖 AI MODEL RECOMMENDER")
+        print(" AI MODEL RECOMMENDER")
         print("=" * 60)
         
         all_recs = self.get_all_recommendations()
         
         for task_type, rec in all_recs.items():
-            print(f"\n📋 {task_type.value.upper()}")
+            print(f"\n {task_type.value.upper()}")
             print(f"   Best: {rec.recommended_model}")
             print(f"   Performance: {rec.performance_details['accuracy']:.1%}")
             print(f"   Confidence: {rec.confidence:.1%}")
@@ -286,7 +279,6 @@ if __name__ == "__main__":
     # Print all recommendations
     recommender.print_recommendations()
     
-    # Get specific recommendation
     print("\n" + "=" * 60)
     print("CUSTOM RECOMMENDATION EXAMPLE")
     print("=" * 60)

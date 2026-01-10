@@ -136,10 +136,9 @@ class DriftMonitorRunner:
         if self.verbose:
             pbar = tqdm(total=total_iterations, desc="Running tests")
         
-        # Run each test against each model
         for model in self.models:
             if self.verbose:
-                tqdm.write(f"\n📊 Testing: {model.name}")
+                tqdm.write(f"\n Testing: {model.name}")
             
             for test in tests:
                 result = self.run_single_test(test, model)
@@ -147,7 +146,7 @@ class DriftMonitorRunner:
                 
                 # Update progress bar with result indicator
                 if self.verbose:
-                    status = "✅" if result.score == 1.0 else "⚠️" if result.score > 0 else "❌"
+                    status = "" if result.score == 1.0 else "" if result.score > 0 else ""
                     pbar.set_postfix({
                         "test": test.id[:15],
                         "score": f"{result.score:.0%}",
@@ -202,7 +201,7 @@ class DriftMonitorRunner:
         summary = run.calculate_summary()
         
         print(f"\n{'='*60}")
-        print("📊 RESULTS SUMMARY")
+        print(" RESULTS SUMMARY")
         print(f"{'='*60}")
         
         print(f"\nTotal results: {summary['total_results']}")
@@ -245,10 +244,10 @@ if __name__ == "__main__":
     
     try:
         run = run_quick_test("claude")
-        print("\n✅ Quick test completed successfully!")
+        print("\n Quick test completed successfully!")
         print(f"   Ran {len(run.results)} tests")
         avg_score = sum(r.score for r in run.results) / len(run.results)
         print(f"   Average score: {avg_score:.1%}")
     except Exception as e:
-        print(f"\n❌ Quick test failed: {e}")
+        print(f"\n Quick test failed: {e}")
         raise

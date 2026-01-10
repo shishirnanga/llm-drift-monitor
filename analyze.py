@@ -34,7 +34,7 @@ def cmd_baseline(args):
             print_baseline_report(baseline)
             
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
         return 1
     
     return 0
@@ -46,7 +46,7 @@ def cmd_drift(args):
     runs = storage.load_all_runs()
     
     if len(runs) < args.baseline + args.current:
-        print(f"❌ Need at least {args.baseline + args.current} runs")
+        print(f" Need at least {args.baseline + args.current} runs")
         print(f"   Currently have: {len(runs)}")
         print(f"   Keep running daily and try again later!")
         return 1

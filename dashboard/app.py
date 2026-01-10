@@ -1,10 +1,3 @@
-"""
-dashboard/app.py
-
-Interactive dashboard for LLM Drift Monitor.
-
-Run with: streamlit run dashboard/app.py
-"""
 
 import sys
 from pathlib import Path
@@ -35,7 +28,7 @@ from dashboard.components.metrics import (
 # Page config
 st.set_page_config(
     page_title="LLM Drift Monitor",
-    page_icon="🔍",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -83,14 +76,14 @@ def load_data():
 
 def main():
     # Header
-    st.markdown('<div class="main-header">🔍 LLM Drift Monitor</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header"> LLM Drift Monitor</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-header">Track how AI models change over time</div>', unsafe_allow_html=True)
     
     # Load data
     storage, runs = load_data()
     
     # Sidebar
-    st.sidebar.title("⚙️ Settings")
+    st.sidebar.title("⚙ Settings")
     
     # Date range filter
     min_date = datetime.fromisoformat(runs[0].timestamp).date()
@@ -124,7 +117,7 @@ def main():
     
     # Info section
     st.sidebar.markdown("---")
-    st.sidebar.markdown("### 📊 Data Summary")
+    st.sidebar.markdown("### Data Summary")
     st.sidebar.metric("Total Runs", len(runs))
     st.sidebar.metric("Date Range", f"{min_date} to {max_date}")
     st.sidebar.metric("Models", len(all_models))
@@ -144,7 +137,7 @@ def main():
         return
     
     # Main content
-    tabs = st.tabs(["📈 Overview", "📊 Analysis", "🔬 Drift Detection", "📋 Data"])
+    tabs = st.tabs(["Overview", "Analysis", "Drift Detection", "Data"])
     
     # TAB 1: Overview
     with tabs[0]:
@@ -156,7 +149,7 @@ def main():
         st.markdown("---")
         
         # Performance over time
-        st.subheader("📈 Performance Over Time")
+        st.subheader("Performance Over Time")
         fig_timeline = plot_performance_over_time(
             filtered_runs, 
             selected_models,
@@ -170,12 +163,12 @@ def main():
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("⚔️ Model Comparison")
+            st.subheader("Model Comparison")
             fig_comparison = plot_model_comparison(filtered_runs, selected_models)
             st.plotly_chart(fig_comparison, use_container_width=True)
         
         with col2:
-            st.subheader("📂 By Category")
+            st.subheader("By Category")
             fig_category = plot_category_breakdown(
                 filtered_runs,
                 selected_models,
@@ -190,7 +183,7 @@ def main():
         if len(runs) < 7:
             st.warning("Need at least 7 runs to calculate baseline. Keep collecting data!")
         else:
-            st.subheader("📊 Baseline Metrics")
+            st.subheader("Baseline Metrics")
             
             try:
                 baselines = get_all_baselines(storage, num_runs=min(7, len(runs)))
@@ -199,7 +192,7 @@ def main():
                     if model_name in baselines:
                         baseline = baselines[model_name]
                         
-                        with st.expander(f"🎯 {model_name}", expanded=True):
+                        with st.expander(f" {model_name}", expanded=True):
                             cols = st.columns(4)
                             
                             stats = baseline.overall_stats
@@ -237,13 +230,13 @@ def main():
             
             st.markdown("---")
             
-            st.subheader("📈 Drift Timeline")
+            st.subheader("Drift Timeline")
             fig_drift = plot_drift_timeline(runs, selected_models)
             st.plotly_chart(fig_drift, use_container_width=True)
     
     # TAB 4: Raw Data
     with tabs[3]:
-        st.header("📋 Raw Data")
+        st.header("Raw Data")
         
         # Convert to DataFrame
         all_results = []
@@ -269,7 +262,7 @@ def main():
         # Download button
         csv = df.to_csv(index=False)
         st.download_button(
-            label="📥 Download CSV",
+            label="Download CSV",
             data=csv,
             file_name=f"llm_drift_data_{datetime.now().strftime('%Y%m%d')}.csv",
             mime="text/csv"

@@ -162,10 +162,8 @@ class ResultsStorage:
         # Save a run
         storage.save_run(test_run)
         
-        # Load all runs
         all_runs = storage.load_all_runs()
         
-        # Load runs from date range
         recent_runs = storage.load_runs_since("2024-11-01")
     """
     
@@ -331,8 +329,8 @@ if __name__ == "__main__":
     # Test storage
     storage = ResultsStorage("./data")
     filepath = storage.save_run(run)
-    print(f"✅ Saved to: {filepath}")
+    print(f" Saved to: {filepath}")
     
     # Test loading
     loaded = storage.load_all_runs()
-    print(f"✅ Loaded {len(loaded)} runs")
+    print(f" Loaded {len(loaded)} runs")

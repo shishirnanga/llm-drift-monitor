@@ -1,9 +1,3 @@
-"""
-dashboard/components/charts.py
-
-Chart components for the dashboard.
-"""
-
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
@@ -13,7 +7,6 @@ from typing import List
 def plot_performance_over_time(runs, models: List[str], categories: List[str] = None):
     """
     Line chart showing performance over time.
-    
     Args:
         runs: List of TestRun objects
         models: Which models to include

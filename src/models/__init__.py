@@ -1,23 +1,3 @@
-"""
-src/models/__init__.py
-
-This file makes the models/ directory a Python package and defines
-what gets exported when someone does:
-    from src.models import OpenAIModel, AnthropicModel
-
-WHY THIS FILE EXISTS:
-In Python, a directory is only treated as a package if it contains __init__.py.
-This file also lets you control what's "public" - what users of your package see.
-
-Without this file:
-    from src.models.openai_model import OpenAIModel  # Have to know the file name
-
-With this file:
-    from src.models import OpenAIModel  # Cleaner!
-"""
-
-"""Model wrappers package - supports multiple AI providers."""
-
 from .base import BaseModel, ModelResponse
 from .openai_model import OpenAIModel
 from .anthropic_model import AnthropicModel
@@ -56,69 +36,69 @@ def get_all_models() -> list[BaseModel]:
     # OpenAI GPT-4 Turbo (original)
     try:
         models.append(OpenAIModel())
-        print("✅ Added: GPT-4 Turbo")
+        print(" Added: GPT-4 Turbo")
     except ValueError as e:
-        print(f"⚠️  Skipping GPT-4 Turbo: {e}")
+        print(f"  Skipping GPT-4 Turbo: {e}")
     
     # OpenAI GPT-4o
     if GPT4oModel:
         try:
             models.append(GPT4oModel())
-            print("✅ Added: GPT-4o")
+            print(" Added: GPT-4o")
         except ValueError as e:
-            print(f"⚠️  Skipping GPT-4o: {e}")
+            print(f"  Skipping GPT-4o: {e}")
     
     # OpenAI GPT-3.5 Turbo
     if GPT35TurboModel:
         try:
             models.append(GPT35TurboModel())
-            print("✅ Added: GPT-3.5 Turbo")
+            print(" Added: GPT-3.5 Turbo")
         except ValueError as e:
-            print(f"⚠️  Skipping GPT-3.5 Turbo: {e}")
+            print(f"  Skipping GPT-3.5 Turbo: {e}")
     
     # Anthropic Claude
     try:
         models.append(AnthropicModel())
-        print("✅ Added: Claude Sonnet")
+        print(" Added: Claude Sonnet")
     except ValueError as e:
-        print(f"⚠️  Skipping Claude: {e}")
+        print(f"  Skipping Claude: {e}")
     
     # Google Gemini Pro
     if GeminiModel:
         try:
             models.append(GeminiModel())
-            print("✅ Added: Gemini 1.5 Pro")
+            print(" Added: Gemini 1.5 Pro")
         except ValueError as e:
-            print(f"⚠️  Skipping Gemini Pro: {e}")
+            print(f"  Skipping Gemini Pro: {e}")
     
     # Google Gemini Flash
     if GeminiFlashModel:
         try:
             models.append(GeminiFlashModel())
-            print("✅ Added: Gemini 1.5 Flash")
+            print(" Added: Gemini 1.5 Flash")
         except ValueError as e:
-            print(f"⚠️  Skipping Gemini Flash: {e}")
+            print(f"  Skipping Gemini Flash: {e}")
     
     # Mistral Large
     if MistralModel:
         try:
             models.append(MistralModel())
-            print("✅ Added: Mistral Large")
+            print(" Added: Mistral Large")
         except ValueError as e:
-            print(f"⚠️  Skipping Mistral: {e}")
+            print(f"  Skipping Mistral: {e}")
     
     # Llama 3.1 70B
     if LlamaModel:
         try:
             models.append(LlamaModel())
-            print("✅ Added: Llama 3.1 70B")
+            print(" Added: Llama 3.1 70B")
         except ValueError as e:
-            print(f"⚠️  Skipping Llama: {e}")
+            print(f"  Skipping Llama: {e}")
     
     if not models:
         raise ValueError("No models available. Check your API keys in .env file")
     
-    print(f"\n🤖 Total models loaded: {len(models)}")
+    print(f"\n Total models loaded: {len(models)}")
     return models
 
 

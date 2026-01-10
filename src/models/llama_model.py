@@ -78,6 +78,6 @@ if __name__ == "__main__":
         print("Testing Llama...")
         model = LlamaModel()
         response = model.query("What is 2+2?")
-        print(f"✅ {response.model_name}: {response.response[:50]}")
+        print(f" {response.model_name}: {response.response[:50]}")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")

@@ -1,22 +1,3 @@
-"""
-src/models/anthropic_model.py
-
-Anthropic Claude model wrapper.
-
-This file implements the BaseModel interface for Anthropic's API.
-All the Claude-specific code is isolated here.
-
-ANTHROPIC API DIFFERENCES FROM OPENAI:
-- Uses "messages" API similar to OpenAI but slightly different format
-- Has a separate "system" parameter (not in messages array)
-- Token counting is split differently
-- Different model naming convention
-
-AUTHENTICATION:
-- Requires an API key from https://console.anthropic.com/
-- Key should be in .env file as ANTHROPIC_API_KEY
-"""
-
 import os
 import time
 from typing import Optional
@@ -26,7 +7,6 @@ from anthropic import Anthropic
 
 from .base import BaseModel, ModelResponse
 
-# Load environment variables
 load_dotenv()
 
 
@@ -63,7 +43,6 @@ class AnthropicModel(BaseModel):
         self._model_id = model_id
         self._max_tokens = max_tokens
         
-        # Get API key from parameter or environment
         self._api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
         
         if not self._api_key:
@@ -127,11 +106,9 @@ class AnthropicModel(BaseModel):
             
             latency_ms = int((time.time() - start_time) * 1000)
             
-            # Extract response text
             # Anthropic returns a list of content blocks; we take the first text block
             response_text = response.content[0].text
             
-            # Extract token usage
             # Anthropic splits this differently than OpenAI
             tokens_input = response.usage.input_tokens
             tokens_output = response.usage.output_tokens
@@ -173,14 +150,14 @@ def test_anthropic():
         model = AnthropicModel()
         response = model.query("What is 2 + 2? Reply with just the number.")
         
-        print(f"✅ Success!")
+        print(f" Success!")
         print(f"   Model: {model.name}")
         print(f"   Response: {response.response}")
         print(f"   Latency: {response.latency_ms}ms")
         print(f"   Tokens: {response.tokens_total}")
         
     except Exception as e:
-        print(f"❌ Failed: {e}")
+        print(f" Failed: {e}")
 
 
 if __name__ == "__main__":

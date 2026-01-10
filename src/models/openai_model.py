@@ -27,7 +27,6 @@ from openai import OpenAI
 
 from .base import BaseModel, ModelResponse
 
-# Load environment variables from .env file
 load_dotenv()
 
 
@@ -66,7 +65,6 @@ class OpenAIModel(BaseModel):
         self._model_id = model_id
         self._max_tokens = max_tokens
         
-        # Get API key from parameter or environment
         self._api_key = api_key or os.getenv("OPENAI_API_KEY")
         
         if not self._api_key:
@@ -126,21 +124,17 @@ class OpenAIModel(BaseModel):
                 model=self._model_id,
                 messages=[
                     # We just send a single user message
-                    # For more complex use cases, you'd include conversation history
                     {"role": "user", "content": prompt}
                 ],
                 temperature=temperature,
                 max_tokens=self._max_tokens,
             )
             
-            # Calculate latency in milliseconds
             latency_ms = int((time.time() - start_time) * 1000)
             
-            # Extract the response text
             # The API returns a complex object; we just want the text
             response_text = response.choices[0].message.content
             
-            # Extract token usage
             # This is important for cost tracking and analysis
             tokens_input = response.usage.prompt_tokens
             tokens_output = response.usage.completion_tokens
@@ -185,14 +179,14 @@ def test_openai():
         model = OpenAIModel()
         response = model.query("What is 2 + 2? Reply with just the number.")
         
-        print(f"✅ Success!")
+        print(f" Success!")
         print(f"   Model: {model.name}")
         print(f"   Response: {response.response}")
         print(f"   Latency: {response.latency_ms}ms")
         print(f"   Tokens: {response.tokens_total}")
         
     except Exception as e:
-        print(f"❌ Failed: {e}")
+        print(f" Failed: {e}")
 
 
 if __name__ == "__main__":

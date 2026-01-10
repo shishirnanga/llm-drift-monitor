@@ -1,15 +1,3 @@
-"""
-src/analysis/statistics.py
-
-Core statistical functions for drift detection.
-
-This module implements the statistical tests we need:
-- Welch's t-test (doesn't assume equal variance)
-- Cohen's d (effect size)
-- Confidence intervals
-- Basic descriptive statistics
-"""
-
 import numpy as np
 from scipy import stats
 from dataclasses import dataclass
@@ -51,10 +39,7 @@ def calculate_statistics(values: List[float]) -> Statistics:
     mean = float(np.mean(arr))
     std = float(np.std(arr, ddof=1))  # ddof=1 for sample std
     
-    # Calculate 95% confidence interval
     # CI = mean ± (critical_value * standard_error)
-    # For 95% CI, critical value ≈ 1.96 for large n
-    # For small n, use t-distribution
     n = len(arr)
     if n > 30:
         # Use normal distribution (z-score)
@@ -219,7 +204,6 @@ if __name__ == "__main__":
     print("Current scores:", current)
     print()
     
-    # Calculate statistics
     baseline_stats = calculate_statistics(baseline)
     current_stats = calculate_statistics(current)
     
@@ -227,7 +211,6 @@ if __name__ == "__main__":
     print(f"Current:  {current_stats}")
     print()
     
-    # Run t-test
     t_stat, p_value = welch_ttest(baseline, current)
     print(f"Welch's t-test:")
     print(f"  t-statistic: {t_stat:.3f}")
@@ -235,15 +218,14 @@ if __name__ == "__main__":
     print(f"  Interpretation: {interpret_pvalue(p_value)}")
     print()
     
-    # Calculate effect size
     d = cohens_d(baseline, current)
     print(f"Cohen's d: {d:.3f}")
     print(f"  Interpretation: Performance {interpret_cohens_d(d)}")
     print()
     
     if p_value < 0.05 and abs(d) > 0.5:
-        print("🚨 DRIFT DETECTED: Significant and meaningful change in performance")
+        print(" DRIFT DETECTED: Significant and meaningful change in performance")
     elif p_value < 0.05:
-        print("⚠️  Statistically significant but small effect size")
+        print("  Statistically significant but small effect size")
     else:
-        print("✅ No significant drift detected")
+        print(" No significant drift detected")

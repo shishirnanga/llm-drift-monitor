@@ -1,9 +1,3 @@
-"""
-dashboard/components/metrics.py
-
-Metric display components for the dashboard.
-"""
-
 import streamlit as st
 from typing import List
 from src.analysis import detect_drift
@@ -51,13 +45,13 @@ def display_summary_metrics(runs, models: List[str]):
                 
                 # Display
                 st.metric(
-                    label=f"🤖 {model}",
+                    label=f" {model}",
                     value=f"{avg_score:.1%}",
                     delta=f"{delta:+.1%}" if delta != 0 else None
                 )
                 
-                st.caption(f"⚡ {avg_latency:.0f}ms avg")
-                st.caption(f"✅ {success_rate:.0%} success rate")
+                st.caption(f" {avg_latency:.0f}ms avg")
+                st.caption(f" {success_rate:.0%} success rate")
 
 
 def display_drift_alerts(storage, models: List[str]):
@@ -75,12 +69,12 @@ def display_drift_alerts(storage, models: List[str]):
                     "moderate": "🟠", 
                     "major": "🔴"
                 }
-                icon = severity_colors.get(result.severity.value, "⚠️")
+                icon = severity_colors.get(result.severity.value, "")
                 
                 st.warning(f"{icon} **{model}**: {result.summary}")
                 
                 # Show details in expander
-                with st.expander("📊 Details"):
+                with st.expander(" Details"):
                     cols = st.columns(4)
                     
                     cols[0].metric("Baseline", f"{result.baseline_mean:.1%}")
@@ -91,15 +85,15 @@ def display_drift_alerts(storage, models: List[str]):
                     st.markdown(f"**Cohen's d:** {result.cohens_d:.3f}")
                     st.markdown(f"**Period:** {result.test_period}")
             else:
-                st.success(f"✅ **{model}**: {result.summary}")
+                st.success(f" **{model}**: {result.summary}")
         
         except ValueError as e:
             if "Need at least" in str(e):
-                st.info(f"ℹ️ **{model}**: Not enough data for drift detection yet.")
+                st.info(f" **{model}**: Not enough data for drift detection yet.")
             else:
-                st.error(f"❌ Error analyzing {model}: {e}")
+                st.error(f" Error analyzing {model}: {e}")
         except Exception as e:
-            st.error(f"❌ Error analyzing {model}: {e}")
+            st.error(f" Error analyzing {model}: {e}")
 
 
 def display_category_performance(runs, model: str):
